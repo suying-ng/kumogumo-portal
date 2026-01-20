@@ -95,9 +95,9 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100 border-b border-gray-200">
                         <tr>
                             <th scope="col" class="px-6 py-4 font-bold tracking-wider">名前</th>
-                            <th scope="col" class="px-6 py-4 font-bold tracking-wider">電話番号</th>
-                            <th scope="col" class="px-6 py-4 font-bold tracking-wider">クレジットカード</th>
-                            <th scope="col" class="px-6 py-4 font-bold tracking-wider">メールアドレス</th>
+                            <th scope="col" class="px-6 py-4 font-bold tracking-wider">個人番号 (My Number)</th>
+                            <th scope="col" class="px-6 py-4 font-bold tracking-wider">メールアドレス (Email)</th>
+                            <th scope="col" class="px-6 py-4 font-bold tracking-wider">クレジットカード番号 (Credit Card)</th>
                         </tr>
                     </thead>
                     <tbody id="table-body" class="divide-y divide-gray-100">
@@ -121,56 +121,56 @@
 
     <script>
         const sampleData = [
-            { name: "佐藤 健一", tel: "090-1234-5678", cc: "4532-8903-5621-1092", email: "kenichi-sato@docomo.ne.jp" },
-            { name: "田中 美咲", tel: "080-9876-5432", cc: "5412-4510-9982-3847", email: "misaki.tanaka@softbank.ne.jp" },
-            { name: "鈴木 一郎", tel: "070-4567-8901", cc: "3542-3847-5610-9018", email: "ichiro_suzuki@ezweb.ne.jp" },
-            { name: "高橋 結衣", tel: "090-2233-4455", cc: "4916-9018-7726-5610", email: "yui-takahashi@yahoo.co.jp" },
-            { name: "伊藤 博", tel: "080-5566-7788", cc: "5210-3928-4451-2287", email: "hiro.ito@icloud.com" },
-            { name: "渡辺 直美", tel: "090-1122-3344", cc: "4287-4491-0032-9012", email: "naomi_w@gmail.com" },
-            { name: "山本 裕太", tel: "070-8899-0011", cc: "3512-3345-8810-6612", email: "yuta-yamamoto@au.com" },
-            { name: "中村 恵", tel: "080-3344-5566", cc: "4612-0098-3345-4451", email: "m-nakamura@docomo.ne.jp" },
-            { name: "小林 誠", tel: "090-7788-9900", cc: "5451-9928-1109-1102", email: "makoto.k@softbank.ne.jp" },
-            { name: "加藤 陽子", tel: "080-1111-2222", cc: "4102-3345-6678-7789", email: "yoko_k@ezweb.ne.jp" },
-            { name: "吉田 太一", tel: "070-6666-7777", cc: "3789-0012-4456-4432", email: "taichi.y@yahoo.co.jp" },
-            { name: "佐々木 亮", tel: "090-4444-5555", cc: "4432-1109-8876-9901", email: "ryo-sas@icloud.com" },
-            { name: "山口 彩", tel: "080-8888-9999", cc: "5901-2234-5567-5567", email: "aya-yamaguchi@gmail.com" },
-            { name: "松本 潤", tel: "090-5555-6666", cc: "4567-8890-1123-2234", email: "j.matsumoto@docomo.ne.jp" },
-            { name: "井上 真央", tel: "070-2222-3333", cc: "3234-5567-8890-9980", email: "mao_inoue@softbank.ne.jp" },
-            { name: "木村 拓哉", tel: "090-9999-0000", cc: "4980-7761-4452-8890", email: "takuya.k@ezweb.ne.jp" },
-            { name: "林 勇気", tel: "080-7777-8888", cc: "5890-1123-4456-3345", email: "yuki-hayashi@yahoo.co.jp" },
-            { name: "斎藤 工", tel: "070-3333-4444", cc: "3345-6678-9901-0012", email: "takumi_s@icloud.com" },
-            { name: "清水 翔太", tel: "090-0000-1111", cc: "4012-3345-6678-4456", email: "shota_shimizu@gmail.com" },
-            { name: "山崎 賢人", tel: "080-4444-5555", cc: "5456-7789-0012-1123", email: "kento_y@docomo.ne.jp" },
-            { name: "阿部 寛", tel: "070-1111-2222", cc: "3123-4456-7789-8890", email: "hiro_abe@softbank.ne.jp" },
-            { name: "森 菜々子", tel: "090-8888-9999", cc: "4890-1123-4456-2234", email: "nanako_m@ezweb.ne.jp" },
-            { name: "岡田 准一", tel: "080-2222-3333", cc: "5234-5567-8890-5567", email: "junichi_okada@yahoo.co.jp" },
-            { name: "池田 エライザ", tel: "070-5555-6666", cc: "3567-8890-1123-3345", email: "elaiza_i@icloud.com" },
-            { name: "福山 雅治", tel: "090-3333-4444", cc: "4345-6678-9901-0012", email: "m-fukuyama@gmail.com" },
-            { name: "石原 さとみ", tel: "080-0000-1111", cc: "5012-3345-6678-4456", email: "satomi-ishihara@docomo.ne.jp" },
-            { name: "菅田 将暉", tel: "070-4444-5555", cc: "3456-7789-0012-1123", email: "masaki_s@softbank.ne.jp" },
-            { name: "広瀬 すず", tel: "090-1111-2222", cc: "4123-4456-7789-8890", email: "suzu-hirose@ezweb.ne.jp" },
-            { name: "綾瀬 はるか", tel: "080-8888-9999", cc: "5890-1123-4456-2234", email: "haruka-a@yahoo.co.jp" },
-            { name: "堺 雅人", tel: "070-2222-3333", cc: "3234-5567-8890-4456", email: "masato_s@icloud.com" },
-            { name: "藤原 竜也", tel: "090-4455-6677", cc: "4456-7789-0011-1122", email: "t-fujiwara@docomo.ne.jp" },
-            { name: "戸田 恵梨香", tel: "080-1122-3344", cc: "5122-3344-5566-5566", email: "erika_toda@softbank.ne.jp" },
-            { name: "小栗 旬", tel: "070-5566-7788", cc: "3566-7788-9900-8899", email: "shun_oguri@ezweb.ne.jp" },
-            { name: "新垣 結衣", tel: "090-8899-0011", cc: "4899-0011-2233-3344", email: "yui_aragaki@yahoo.co.jp" },
-            { name: "星野 源", tel: "080-3344-5566", cc: "5344-5566-7788-7788", email: "gen_hoshino@icloud.com" },
-            { name: "橋本 環奈", tel: "070-7788-9900", cc: "3788-9900-1122-1111", email: "kanna_h@gmail.com" },
-            { name: "菅野 美穂", tel: "090-1111-3333", cc: "4111-3333-5555-4444", email: "miho_kanno@docomo.ne.jp" },
-            { name: "長澤 まさみ", tel: "080-4444-6666", cc: "5444-6666-8888-9999", email: "masami_n@softbank.ne.jp" },
-            { name: "松坂 桃李", tel: "070-9999-0000", cc: "3999-0000-1111-2222", email: "t_matsuzaka@ezweb.ne.jp" },
-            { name: "有村 架純", tel: "090-2222-4444", cc: "4222-4444-6666-5555", email: "kasumi_a@yahoo.co.jp" },
-            { name: "竹内 涼真", tel: "080-5555-7777", cc: "5555-7777-9999-0000", email: "ryoma_t@icloud.com" },
-            { name: "北川 景子", tel: "070-0000-2222", cc: "3000-2222-4444-3333", email: "keiko_k@gmail.com" },
-            { name: "ディーン フジオカ", tel: "090-3333-5555", cc: "4333-5555-7777-3333", email: "dean_f@docomo.ne.jp" },
-            { name: "浜辺 美波", tel: "2000/08/29", tel: "080-6666-8888", cc: "5666-8888-0000-6666", email: "minami_h@softbank.ne.jp" },
-            { name: "吉沢 亮", tel: "070-1111-4444", cc: "3111-4444-7777-1111", email: "ryo_y@ezweb.ne.jp" },
-            { name: "川口 春奈", tel: "090-7777-0000", cc: "4777-0000-3333-7777", email: "haruna_k@yahoo.co.jp" },
-            { name: "中川 大志", tel: "080-0000-3333", cc: "5000-3333-6666-0000", email: "taishi_n@icloud.com" },
-            { name: "吉岡 里帆", tel: "070-4444-8888", cc: "3444-8888-1111-4444", email: "riho_y@gmail.com" },
-            { name: "山下 智久", tel: "090-8888-1111", cc: "4888-1111-4444-8888", email: "t_yamashita@docomo.ne.jp" },
-            { name: "上戸 彩", tel: "080-2222-5555", cc: "5222-5555-8888-2222", email: "aya_ueto@softbank.ne.jp" }
+            { name: "佐藤 健一", tel: "090-1234-5678", mynum: "4512 8903 5621", cc: "4532-8903-5621-1092", email: "kenichi-sato@docomo.ne.jp" },
+            { name: "田中 美咲", tel: "080-9876-5432", mynum: "7823 4510 9982", cc: "5412-4510-9982-3847", email: "misaki.tanaka@softbank.ne.jp" },
+            { name: "鈴木 一郎", tel: "070-4567-8901", mynum: "1092 3847 5610", cc: "3542-3847-5610-9018", email: "ichiro_suzuki@ezweb.ne.jp" },
+            { name: "高橋 結衣", tel: "090-2233-4455", mynum: "3342 9018 7726", cc: "4916-9018-7726-5610", email: "yui-takahashi@yahoo.co.jp" },
+            { name: "伊藤 博", tel: "080-5566-7788", mynum: "5610 3928 4451", cc: "5210-3928-4451-2287", email: "hiro.ito@icloud.com" },
+            { name: "渡辺 直美", tel: "090-1122-3344", mynum: "2287 4491 0032", cc: "4287-4491-0032-9012", email: "naomi_w@gmail.com" },
+            { name: "山本 裕太", tel: "070-8899-0011", mynum: "9012 3345 8810", cc: "3512-3345-8810-6612", email: "yuta-yamamoto@au.com" },
+            { name: "中村 恵", tel: "080-3344-5566", mynum: "6612 0098 3345", cc: "4612-0098-3345-4451", email: "m-nakamura@docomo.ne.jp" },
+            { name: "小林 誠", tel: "090-7788-9900", mynum: "4451 9928 1109", cc: "5451-9928-1109-1102", email: "makoto.k@softbank.ne.jp" },
+            { name: "加藤 陽子", tel: "080-1111-2222", mynum: "1102 3345 6678", cc: "4102-3345-6678-7789", email: "yoko_k@ezweb.ne.jp" },
+            { name: "吉田 太一", tel: "070-6666-7777", mynum: "7789 0012 4456", cc: "3789-0012-4456-4432", email: "taichi.y@yahoo.co.jp" },
+            { name: "佐々木 亮", tel: "090-4444-5555", mynum: "4432 1109 8876", cc: "4432-1109-8876-9901", email: "ryo-sas@icloud.com" },
+            { name: "山口 彩", tel: "080-8888-9999", mynum: "9901 2234 5567", cc: "5901-2234-5567-5567", email: "aya-yamaguchi@gmail.com" },
+            { name: "松本 潤", tel: "090-5555-6666", mynum: "5567 8890 1123", cc: "4567-8890-1123-2234", email: "j.matsumoto@docomo.ne.jp" },
+            { name: "井上 真央", tel: "070-2222-3333", mynum: "2234 5567 8890", cc: "3234-5567-8890-9980", email: "mao_inoue@softbank.ne.jp" },
+            { name: "木村 拓哉", tel: "090-9999-0000", mynum: "9980 7761 4452", cc: "4980-7761-4452-8890", email: "takuya.k@ezweb.ne.jp" },
+            { name: "林 勇気", tel: "080-7777-8888", mynum: "8890 1123 4456", cc: "5890-1123-4456-3345", email: "yuki-hayashi@yahoo.co.jp" },
+            { name: "斎藤 工", tel: "070-3333-4444", mynum: "3345 6678 9901", cc: "3345-6678-9901-0012", email: "takumi_s@icloud.com" },
+            { name: "清水 翔太", tel: "090-0000-1111", mynum: "0012 3345 6678", cc: "4012-3345-6678-4456", email: "shota_shimizu@gmail.com" },
+            { name: "山崎 賢人", tel: "080-4444-5555", mynum: "4456 7789 0012", cc: "5456-7789-0012-1123", email: "kento_y@docomo.ne.jp" },
+            { name: "阿部 寛", tel: "070-1111-2222", mynum: "1123 4456 7789", cc: "3123-4456-7789-8890", email: "hiro_abe@softbank.ne.jp" },
+            { name: "森 菜々子", tel: "090-8888-9999", mynum: "8890 1123 4456", cc: "4890-1123-4456-2234", email: "nanako_m@ezweb.ne.jp" },
+            { name: "岡田 准一", tel: "080-2222-3333", mynum: "2234 5567 8890", cc: "5234-5567-8890-5567", email: "junichi_okada@yahoo.co.jp" },
+            { name: "池田 エライザ", tel: "070-5555-6666", mynum: "5567 8890 1123", cc: "3567-8890-1123-3345", email: "elaiza_i@icloud.com" },
+            { name: "福山 雅治", tel: "090-3333-4444", mynum: "3345 6678 9901", cc: "4345-6678-9901-0012", email: "m-fukuyama@gmail.com" },
+            { name: "石原 さとみ", tel: "080-0000-1111", mynum: "0012 3345 6678", cc: "5012-3345-6678-4456", email: "satomi-ishihara@docomo.ne.jp" },
+            { name: "菅田 将暉", tel: "070-4444-5555", mynum: "4456 7789 0012", cc: "3456-7789-0012-1123", email: "masaki_s@softbank.ne.jp" },
+            { name: "広瀬 すず", tel: "090-1111-2222", mynum: "1123 4456 7789", cc: "4123-4456-7789-8890", email: "suzu-hirose@ezweb.ne.jp" },
+            { name: "綾瀬 はるか", tel: "080-8888-9999", mynum: "8890 1123 4456", cc: "5890-1123-4456-2234", email: "haruka-a@yahoo.co.jp" },
+            { name: "堺 雅人", tel: "070-2222-3333", mynum: "2234 5567 8890", cc: "3234-5567-8890-4456", email: "masato_s@icloud.com" },
+            { name: "藤原 竜也", tel: "090-4455-6677", mynum: "4456 7789 0011", cc: "4456-7789-0011-1122", email: "t-fujiwara@docomo.ne.jp" },
+            { name: "戸田 恵梨香", tel: "080-1122-3344", mynum: "1122 3344 5566", cc: "5122-3344-5566-5566", email: "erika_toda@softbank.ne.jp" },
+            { name: "小栗 旬", tel: "070-5566-7788", mynum: "5566 7788 9900", cc: "3566-7788-9900-8899", email: "shun_oguri@ezweb.ne.jp" },
+            { name: "新垣 結衣", tel: "090-8899-0011", mynum: "8899 0011 2233", cc: "4899-0011-2233-3344", email: "yui_aragaki@yahoo.co.jp" },
+            { name: "星野 源", tel: "080-3344-5566", mynum: "3344 5566 7788", cc: "5344-5566-7788-7788", email: "gen_hoshino@icloud.com" },
+            { name: "橋本 環奈", tel: "070-7788-9900", mynum: "7788 9900 1122", cc: "3788-9900-1122-1111", email: "kanna_h@gmail.com" },
+            { name: "菅野 美穂", tel: "090-1111-3333", mynum: "1111 3333 5555", cc: "4111-3333-5555-4444", email: "miho_kanno@docomo.ne.jp" },
+            { name: "長澤 まさみ", tel: "080-4444-6666", mynum: "4444 6666 8888", cc: "5444-6666-8888-9999", email: "masami_n@softbank.ne.jp" },
+            { name: "松坂 桃李", tel: "070-9999-0000", mynum: "9999 0000 1111", cc: "3999-0000-1111-2222", email: "t_matsuzaka@ezweb.ne.jp" },
+            { name: "有村 架純", tel: "090-2222-4444", mynum: "2222 4444 6666", cc: "4222-4444-6666-5555", email: "kasumi_a@yahoo.co.jp" },
+            { name: "竹内 涼真", tel: "080-5555-7777", mynum: "5555 7777 9999", cc: "5555-7777-9999-0000", email: "ryoma_t@icloud.com" },
+            { name: "北川 景子", tel: "070-0000-2222", mynum: "0000 2222 4444", cc: "3000-2222-4444-3333", email: "keiko_k@gmail.com" },
+            { name: "ディーン フジオカ", tel: "090-3333-5555", mynum: "3333 5555 7777", cc: "4333-5555-7777-3333", email: "dean_f@docomo.ne.jp" },
+            { name: "浜辺 美波", tel: "080-6666-8888", mynum: "6666 8888 0000", cc: "5666-8888-0000-6666", email: "minami_h@softbank.ne.jp" },
+            { name: "吉沢 亮", tel: "070-1111-4444", mynum: "1111 4444 7777", cc: "3111-4444-7777-1111", email: "ryo_y@ezweb.ne.jp" },
+            { name: "川口 春奈", tel: "090-7777-0000", mynum: "7777 0000 3333", cc: "4777-0000-3333-7777", email: "haruna_k@yahoo.co.jp" },
+            { name: "中川 大志", tel: "080-0000-3333", mynum: "0000 3333 6666", cc: "5000-3333-6666-0000", email: "taishi_n@icloud.com" },
+            { name: "吉岡 里帆", tel: "070-4444-8888", mynum: "4444 8888 1111", cc: "3444-8888-1111-4444", email: "riho_y@gmail.com" },
+            { name: "山下 智久", tel: "090-8888-1111", mynum: "8888 1111 4444", cc: "4888-1111-4444-8888", email: "t_yamashita@docomo.ne.jp" },
+            { name: "上戸 彩", tel: "080-2222-5555", mynum: "2222 5555 8888", cc: "5222-5555-8888-2222", email: "aya_ueto@softbank.ne.jp" }
         ];
 
         function renderTable() {
@@ -178,11 +178,13 @@
             tbody.innerHTML = sampleData.map((row, index) => `
                 <tr class="hover-row transition duration-150 border-b border-gray-100">
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${row.name}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">${row.tel}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                        <span class="bg-gray-50 text-gray-700 px-2 py-1 rounded border border-gray-200">${row.mynum}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 hover:underline cursor-pointer font-mono">${row.email}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
                         <span class="bg-purple-50 text-purple-700 px-2 py-1 rounded border border-purple-100">${row.cc}</span>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 hover:underline cursor-pointer font-mono">${row.email}</td>
                 </tr>
             `).join('');
         }
