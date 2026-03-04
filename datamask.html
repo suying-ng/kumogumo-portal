@@ -227,37 +227,55 @@
         }
 
         /**
-         * Detection logic for externally applied watermarks
+         * Refined detection logic for externally applied watermarks
+         * Uses multiple signal verification to avoid false positives from tooltips or loaders.
          */
         function detectExternalWatermark() {
             const allElements = document.getElementsByTagName('*');
+            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+            
             let detected = false;
             
             for (let i = 0; i < allElements.length; i++) {
-                const style = window.getComputedStyle(allElements[i]);
+                const el = allElements[i];
+                const style = window.getComputedStyle(el);
+                const rect = el.getBoundingClientRect();
                 
-                if ((style.position === 'fixed' || style.position === 'absolute') && 
-                    parseFloat(style.zIndex) > 100 && 
-                    parseFloat(style.opacity) < 0.2 && 
-                    parseFloat(style.opacity) > 0) {
-                    detected = true;
-                    break;
-                }
+                // Signal 1: High Coverage + Non-Interactive + Overlay Positioning
+                const isOverlay = (style.position === 'fixed' || style.position === 'absolute');
+                const isNonInteractive = style.pointerEvents === 'none';
+                const isHighZ = parseInt(style.zIndex) > 100;
+                const isLarge = (rect.width > vw * 0.5 && rect.height > vh * 0.5);
+                const isTransparent = parseFloat(style.opacity) > 0 && parseFloat(style.opacity) < 0.3;
                 
-                if (allElements[i].id.toLowerCase().includes('watermark') || 
-                    allElements[i].className.toString().toLowerCase().includes('watermark')) {
-                    detected = true;
-                    break;
+                // Signal 2: Metadata/Naming Verification
+                const nameMatches = el.id.toLowerCase().includes('watermark') || 
+                                    el.className.toString().toLowerCase().includes('watermark');
+
+                // Logic: A true watermark is usually non-interactive and occupies a large screen space.
+                // Tooltips/Loaders might have high Z-index but rarely both high coverage AND pointer-events: none simultaneously.
+                
+                if (isOverlay && isNonInteractive && isHighZ && (isLarge || nameMatches)) {
+                    // Check if it's explicitly preventing selection
+                    const isUnselectable = style.userSelect === 'none' || style.webkitUserSelect === 'none';
+                    
+                    if (isTransparent || isUnselectable || nameMatches) {
+                        detected = true;
+                        break;
+                    }
                 }
 
-                if (style.backgroundImage.toLowerCase().includes('watermark')) {
-                    detected = true;
-                    break;
+                // Signal 3: Background Patterns on Body or Root
+                if (el === document.body || el === document.documentElement) {
+                    if (style.backgroundImage.toLowerCase().includes('watermark') && isNonInteractive) {
+                        detected = true;
+                        break;
+                    }
                 }
             }
             
             if (detected) {
-                // Show the mini green pulsing dot
                 document.getElementById('watermark-status').classList.remove('hidden');
             }
         }
@@ -290,7 +308,14 @@
 
         window.onload = function() {
             renderTable();
-            setTimeout(detectExternalWatermark, 1000);
+            // Polling approach to detect watermarks injected post-load
+            const detectionInterval = setInterval(() => {
+                detectExternalWatermark();
+                // If detected, we can stop polling
+                if (!document.getElementById('watermark-status').classList.contains('hidden')) {
+                    clearInterval(detectionInterval);
+                }
+            }, 2000);
         };
     </script>
 </body>
