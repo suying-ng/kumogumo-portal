@@ -39,6 +39,24 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #6b46c1;
         }
+
+        /* Print styles to ensure the table looks good on paper */
+        @media print {
+            header, footer, .no-print {
+                display: none !important;
+            }
+            body {
+                background-color: white;
+            }
+            main {
+                padding: 0;
+                margin: 0;
+            }
+            .shadow-xl, .shadow-sm {
+                shadow: none !important;
+                border: 1px solid #eee;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen bg-gray-50">
@@ -75,7 +93,18 @@
                 <h2 class="text-3xl font-bold text-gray-800">顧客情報一覧</h2>
                 <p class="text-gray-600 mt-1">デモンストレーション用のサンプルデータ。全ての情報は架空のものです。</p>
             </div>
-            <div class="flex space-x-3">
+            <div class="flex space-x-3 no-print">
+                <!-- Print Button -->
+                <button 
+                    onclick="window.print()"
+                    class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 flex items-center shadow-sm transition active:scale-95"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                    <span>印刷</span>
+                </button>
+
                 <!-- CSV Download Button with trigger -->
                 <button 
                     onclick="downloadCSV()"
@@ -194,10 +223,7 @@
          * Function to force download a CSV file based on sampleData
          */
         function downloadCSV() {
-            // 1. Define CSV headers
             const headers = ["名前", "マイナンバー", "メールアドレス", "クレジットカード", "電話番号"];
-            
-            // 2. Map data to rows (handling potential commas in fields by wrapping in quotes)
             const rows = sampleData.map(item => [
                 item.name,
                 item.mynum,
@@ -206,15 +232,8 @@
                 item.tel
             ].map(val => `"${val}"`).join(","));
 
-            // 3. Combine headers and rows
-            // \uFEFF is the Byte Order Mark (BOM) for UTF-8. 
-            // This forces Excel to recognize Japanese characters correctly.
             const csvContent = "\uFEFF" + headers.join(",") + "\n" + rows.join("\n");
-
-            // 4. Create a Blob with the CSV content
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            
-            // 5. Create a temporary download link
             const link = document.createElement("a");
             const url = URL.createObjectURL(blob);
             
@@ -222,12 +241,10 @@
             link.setAttribute("download", `Customer_List_${new Date().toISOString().split('T')[0]}.csv`);
             link.style.visibility = 'hidden';
             
-            // 6. Append, trigger click, and cleanup
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            // Revoke the object URL to free up memory
             setTimeout(() => URL.revokeObjectURL(url), 100);
         }
 
