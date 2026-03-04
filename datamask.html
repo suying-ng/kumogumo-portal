@@ -40,20 +40,24 @@
             background: #6b46c1;
         }
 
-        /* Print styles to ensure the table looks good on paper */
+        /* Print styles */
         @media print {
             header, footer, .no-print {
                 display: none !important;
             }
             body {
-                background-color: white;
+                background-color: white !important;
+                /* Forces browsers to print background colors and images (essential for watermarks) */
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
             }
             main {
                 padding: 0;
                 margin: 0;
             }
             .shadow-xl, .shadow-sm {
-                shadow: none !important;
+                box-shadow: none !important;
                 border: 1px solid #eee;
             }
         }
@@ -90,6 +94,12 @@
         <!-- Page Title & Actions -->
         <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
+                <div id="watermark-status" class="hidden no-print mb-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    <svg class="mr-1.5 h-2 w-2 text-blue-400" fill="currentColor" viewBox="0 0 8 8">
+                        <circle cx="4" cy="4" r="3" />
+                    </svg>
+                    外部ウォーターマークを検出しました
+                </div>
                 <h2 class="text-3xl font-bold text-gray-800">顧客情報一覧</h2>
                 <p class="text-gray-600 mt-1">デモンストレーション用のサンプルデータ。全ての情報は架空のものです。</p>
             </div>
@@ -105,7 +115,7 @@
                     <span>印刷</span>
                 </button>
 
-                <!-- CSV Download Button with trigger -->
+                <!-- CSV Download Button -->
                 <button 
                     onclick="downloadCSV()"
                     class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 flex items-center shadow-sm transition active:scale-95"
@@ -220,8 +230,46 @@
         }
 
         /**
-         * Function to force download a CSV file based on sampleData
+         * Detection logic for externally applied watermarks
+         * This searches for common patterns like fixed elements with low opacity 
+         * or background images containing "watermark" in the name.
          */
+        function detectExternalWatermark() {
+            const allElements = document.getElementsByTagName('*');
+            let detected = false;
+            
+            for (let i = 0; i < allElements.length; i++) {
+                const style = window.getComputedStyle(allElements[i]);
+                
+                // Heuristic 1: Fixed/Absolute element covering a large portion of the screen with low opacity
+                if ((style.position === 'fixed' || style.position === 'absolute') && 
+                    parseFloat(style.zIndex) > 100 && 
+                    parseFloat(style.opacity) < 0.2 && 
+                    parseFloat(style.opacity) > 0) {
+                    detected = true;
+                    break;
+                }
+                
+                // Heuristic 2: Elements with classes or IDs containing "watermark"
+                if (allElements[i].id.toLowerCase().includes('watermark') || 
+                    allElements[i].className.toString().toLowerCase().includes('watermark')) {
+                    detected = true;
+                    break;
+                }
+
+                // Heuristic 3: Background image containing "watermark"
+                if (style.backgroundImage.toLowerCase().includes('watermark')) {
+                    detected = true;
+                    break;
+                }
+            }
+            
+            if (detected) {
+                document.getElementById('watermark-status').classList.remove('hidden');
+                console.log("External watermark detected.");
+            }
+        }
+
         function downloadCSV() {
             const headers = ["名前", "マイナンバー", "メールアドレス", "クレジットカード", "電話番号"];
             const rows = sampleData.map(item => [
@@ -248,7 +296,11 @@
             setTimeout(() => URL.revokeObjectURL(url), 100);
         }
 
-        window.onload = renderTable;
+        window.onload = function() {
+            renderTable();
+            // Wait slightly for any external injection scripts to load
+            setTimeout(detectExternalWatermark, 1000);
+        };
     </script>
 </body>
 </html>
